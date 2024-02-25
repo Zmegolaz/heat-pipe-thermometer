@@ -47,6 +47,11 @@ script.on_event(defines.events.on_tick, function(event)
     for uid,struct in pairs(global.temp_sensors) do
       local entity = struct.thermometer
       if entity.valid then
+		if struct.heatpipe then
+		  if not struct.heatpipe.valid then
+		    struct.heatpipe = nil
+		  end
+		end	  
         if struct.heatpipe then
           local control = entity.get_or_create_control_behavior()
           control.set_signal(1, { signal = { type = "virtual", name = "signal-T" }, count = struct.heatpipe.temperature })
